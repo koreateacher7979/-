@@ -15,135 +15,163 @@
         }
         
         .loader {
-            border: 2px solid #f3f3f3;
-            border-top: 2px solid #3b82f6;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #3b82f6;
             border-radius: 50%;
-            width: 18px;
-            height: 18px;
-            animation: spin 0.8s linear infinite;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
             display: inline-block;
         }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
         .fade-in {
-            animation: fadeIn 0.5s ease-out forwards;
+            animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
         
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #f1f1f1; }
-        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        .card-glow:hover {
+            box-shadow: 0 20px 25px -5px rgba(59, 130, 246, 0.1), 0 10px 10px -5px rgba(59, 130, 246, 0.04);
+        }
     </style>
 </head>
-<body class="min-h-screen text-slate-900 antialiased">
-    <div class="max-w-5xl mx-auto px-4 py-8 md:py-12">
+<body class="min-h-screen text-slate-900 antialiased selection:bg-blue-100">
+    <div class="max-w-5xl mx-auto px-4 py-12 md:py-20">
         <!-- Header -->
-        <header class="text-center mb-10">
-            <div class="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-tr from-blue-600 to-indigo-500 rounded-3xl shadow-xl mb-4 text-white">
-                <i class="fa-solid fa-wand-magic-sparkles text-4xl"></i>
+        <header class="text-center mb-12">
+            <div class="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-3xl shadow-xl shadow-blue-200 mb-6 text-white transform hover:rotate-6 transition-transform">
+                <i class="fa-solid fa-wand-magic-sparkles text-3xl"></i>
             </div>
-            <h1 class="text-3xl md:text-4xl font-extrabold text-slate-800 tracking-tight mb-2">강의 리뷰 포스팅 생성기</h1>
-            <div class="inline-block px-4 py-1.5 bg-blue-50 rounded-full border border-blue-100">
-                <p class="text-blue-700 font-bold text-sm md:text-base">개발자: 가치있는 미래교육 연구소 대표 김병찬</p>
+            <h1 class="text-3xl md:text-5xl font-black text-slate-900 tracking-tight mb-4 text-balance">강의 리뷰 포스팅 생성기</h1>
+            <div class="inline-flex items-center gap-2 px-5 py-2 bg-white rounded-full border border-slate-200 shadow-sm">
+                <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                <p class="text-slate-600 font-bold text-sm md:text-base">개발자: 가치있는 미래교육 연구소 대표 김병찬</p>
             </div>
         </header>
 
-        <!-- Input Section -->
-        <main class="grid gap-8">
-            <section class="bg-white rounded-3xl shadow-sm border border-slate-200 p-6 md:p-8">
-                <h2 class="text-lg font-bold text-slate-700 mb-6 flex items-center gap-2">
-                    <i class="fa-solid fa-pen-nib text-blue-500"></i> 강의 기초 정보 입력
-                </h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
-                    <div class="space-y-1.5">
-                        <label class="text-xs font-bold text-slate-500 ml-1">출강 지역</label>
-                        <input type="text" id="region" placeholder="예: 서울 강남구, 제주도 등" class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all">
+        <!-- Main Content -->
+        <main class="grid gap-10">
+            <!-- Input Form Section -->
+            <section class="bg-white rounded-[2rem] shadow-xl shadow-slate-200/50 border border-slate-100 p-8 md:p-10 transition-all card-glow">
+                <div class="flex items-center gap-3 mb-8">
+                    <div class="p-2 bg-blue-50 rounded-lg text-blue-600">
+                        <i class="fa-solid fa-paper-plane"></i>
                     </div>
-                    <div class="space-y-1.5">
-                        <label class="text-xs font-bold text-slate-500 ml-1">학교/기관명</label>
-                        <input type="text" id="school" placeholder="예: 한국중학교, 교육청 등" class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all">
+                    <h2 class="text-xl font-bold text-slate-800">강의 정보 입력</h2>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+                    <div class="space-y-2">
+                        <label class="text-sm font-bold text-slate-500 flex items-center gap-1.5 ml-1">
+                            <i class="fa-solid fa-location-dot text-xs"></i> 출강 지역
+                        </label>
+                        <input type="text" id="region" placeholder="예: 서울 강남구, 제주도 서귀포시" class="w-full px-5 py-4 rounded-2xl border border-slate-200 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 focus:outline-none transition-all placeholder:text-slate-300">
                     </div>
-                    <div class="space-y-1.5">
-                        <label class="text-xs font-bold text-slate-500 ml-1">교육 대상</label>
-                        <input type="text" id="audience" placeholder="예: 중학생, 교사, 학부모 등" class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all">
+                    <div class="space-y-2">
+                        <label class="text-sm font-bold text-slate-500 flex items-center gap-1.5 ml-1">
+                            <i class="fa-solid fa-school text-xs"></i> 학교/기관명
+                        </label>
+                        <input type="text" id="school" placeholder="예: 한국중학교, 경기도 교육청" class="w-full px-5 py-4 rounded-2xl border border-slate-200 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 focus:outline-none transition-all placeholder:text-slate-300">
                     </div>
-                    <div class="space-y-1.5">
-                        <label class="text-xs font-bold text-slate-500 ml-1">강의 주제/특이사항</label>
-                        <input type="text" id="notes" placeholder="예: 생성형 AI 명화 그리기, 열정 가득했음" class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all">
+                    <div class="space-y-2">
+                        <label class="text-sm font-bold text-slate-500 flex items-center gap-1.5 ml-1">
+                            <i class="fa-solid fa-users text-xs"></i> 교육 대상
+                        </label>
+                        <input type="text" id="audience" placeholder="예: 중학교 3학년, 초등교사 30명" class="w-full px-5 py-4 rounded-2xl border border-slate-200 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 focus:outline-none transition-all placeholder:text-slate-300">
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-sm font-bold text-slate-500 flex items-center gap-1.5 ml-1">
+                            <i class="fa-solid fa-star text-xs"></i> 주제 및 분위기
+                        </label>
+                        <input type="text" id="notes" placeholder="예: 생성형 AI 예술 체험, 적극적인 참여" class="w-full px-5 py-4 rounded-2xl border border-slate-200 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 focus:outline-none transition-all placeholder:text-slate-300">
                     </div>
                 </div>
-                <button id="generateBtn" onclick="generateContent()" class="w-full bg-slate-900 hover:bg-black text-white font-bold py-4 rounded-2xl transition-all shadow-xl flex justify-center items-center gap-2 text-lg disabled:opacity-50 disabled:cursor-not-allowed">
+
+                <button id="generateBtn" onclick="generateContent()" class="w-full group bg-slate-900 hover:bg-blue-600 text-white font-bold py-5 rounded-2xl transition-all shadow-xl shadow-slate-200 hover:shadow-blue-200 flex justify-center items-center gap-3 text-lg disabled:opacity-50 disabled:cursor-not-allowed">
                     <span id="btnText">AI 포스팅 생성하기</span>
+                    <i class="fa-solid fa-chevron-right text-sm group-hover:translate-x-1 transition-transform"></i>
                 </button>
             </section>
 
+            <!-- Loading Spinner -->
+            <div id="loadingOverlay" class="hidden flex-col items-center justify-center py-10 space-y-4">
+                <div class="loader"></div>
+                <p class="text-slate-500 font-medium animate-pulse">AI가 최적의 포스팅 문구를 고민 중입니다...</p>
+            </div>
+
             <!-- Result Section -->
-            <section id="resultContainer" class="hidden space-y-6 fade-in">
-                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 px-2">
-                    <h2 class="text-2xl font-bold text-slate-800">생성된 리뷰 초안</h2>
-                    <button onclick="generateContent()" class="bg-white border border-slate-200 px-4 py-2 rounded-xl text-slate-600 font-semibold hover:bg-slate-50 transition-all flex items-center justify-center gap-2 shadow-sm">
-                        <i class="fa-solid fa-rotate"></i> 다시 생성하기
-                    </button>
+            <section id="resultContainer" class="hidden space-y-8 fade-in">
+                <div class="flex items-center justify-between px-2">
+                    <h2 class="text-2xl font-black text-slate-900">생성된 리뷰 초안</h2>
+                    <span class="text-sm text-slate-400 font-medium">내용을 확인하고 복사하세요</span>
                 </div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <!-- Instagram -->
-                    <article class="bg-white rounded-3xl shadow-md border border-slate-100 overflow-hidden flex flex-col">
-                        <div class="bg-gradient-to-r from-purple-600 via-pink-500 to-orange-400 p-5 text-white flex justify-between items-center">
-                            <span class="font-bold flex items-center gap-2 text-lg">
-                                <i class="fa-brands fa-instagram text-xl"></i> 인스타그램용
-                            </span>
-                            <button onclick="copyText('instaContent')" class="bg-white/20 hover:bg-white/30 px-4 py-1.5 rounded-full text-sm font-bold backdrop-blur-sm transition-all">복사</button>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- Instagram Card -->
+                    <article class="group bg-white rounded-[2.5rem] shadow-lg border border-slate-100 overflow-hidden flex flex-col transition-all hover:-translate-y-1">
+                        <div class="bg-gradient-to-r from-purple-600 via-pink-500 to-orange-400 p-6 text-white flex justify-between items-center">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-md">
+                                    <i class="fa-brands fa-instagram text-xl"></i>
+                                </div>
+                                <span class="font-bold text-lg">Instagram</span>
+                            </div>
+                            <button onclick="copyText('instaContent')" class="bg-white/20 hover:bg-white text-white hover:text-slate-900 px-5 py-2 rounded-xl text-sm font-bold backdrop-blur-sm transition-all flex items-center gap-2">
+                                <i class="fa-regular fa-copy"></i> 복사
+                            </button>
                         </div>
-                        <div class="p-6 flex-grow">
-                            <div id="instaContent" class="text-slate-700 whitespace-pre-wrap leading-relaxed text-base break-all"></div>
+                        <div class="p-8 flex-grow">
+                            <div id="instaContent" class="text-slate-700 whitespace-pre-wrap leading-relaxed text-[1.05rem] break-all italic"></div>
                         </div>
                     </article>
 
-                    <!-- Naver Blog -->
-                    <article class="bg-white rounded-3xl shadow-md border border-slate-100 overflow-hidden flex flex-col">
-                        <div class="bg-emerald-500 p-5 text-white flex justify-between items-center">
-                            <span class="font-bold flex items-center gap-2 text-lg">
-                                <i class="fa-solid fa-blog text-xl"></i> 네이버 블로그용
-                            </span>
-                            <button onclick="copyText('blogContent')" class="bg-white/20 hover:bg-white/30 px-4 py-1.5 rounded-full text-sm font-bold backdrop-blur-sm transition-all">복사</button>
+                    <!-- Blog Card -->
+                    <article class="group bg-white rounded-[2.5rem] shadow-lg border border-slate-100 overflow-hidden flex flex-col transition-all hover:-translate-y-1">
+                        <div class="bg-[#03c75a] p-6 text-white flex justify-between items-center">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-md">
+                                    <i class="fa-solid fa-blog text-xl"></i>
+                                </div>
+                                <span class="font-bold text-lg">Naver Blog</span>
+                            </div>
+                            <button onclick="copyText('blogContent')" class="bg-white/20 hover:bg-white text-white hover:text-slate-900 px-5 py-2 rounded-xl text-sm font-bold backdrop-blur-sm transition-all flex items-center gap-2">
+                                <i class="fa-regular fa-copy"></i> 복사
+                            </button>
                         </div>
-                        <div class="p-6 flex-grow">
-                            <div id="blogContent" class="text-slate-700 whitespace-pre-wrap leading-relaxed text-base break-all"></div>
+                        <div class="p-8 flex-grow">
+                            <div id="blogContent" class="text-slate-700 whitespace-pre-wrap leading-relaxed text-[1.05rem] break-all"></div>
                         </div>
                     </article>
                 </div>
             </section>
         </main>
         
-        <footer class="mt-16 text-center text-slate-400 text-sm">
-            <p>© 2025 가치있는 미래교육 연구소. All rights reserved.</p>
+        <footer class="mt-24 text-center border-t border-slate-200 pt-10">
+            <p class="text-slate-400 text-sm font-medium">© 2025 가치있는 미래교육 연구소. All rights reserved.</p>
         </footer>
 
-        <!-- Toast Notification -->
-        <div id="messageBox" class="fixed bottom-10 left-1/2 -translate-x-1/2 px-8 py-4 rounded-2xl bg-slate-900 text-white shadow-2xl transition-all opacity-0 pointer-events-none z-50 font-semibold text-center max-w-[90vw]">
+        <!-- Toast Message -->
+        <div id="toast" class="fixed bottom-10 left-1/2 -translate-x-1/2 px-8 py-4 rounded-2xl bg-slate-900 text-white shadow-2xl transition-all opacity-0 pointer-events-none z-50 font-bold text-center translate-y-4">
         </div>
-        <textarea id="copyBuffer" class="fixed -top-full opacity-0 pointer-events-none"></textarea>
+        <textarea id="hiddenCopyArea" class="fixed -top-full opacity-0"></textarea>
     </div>
 
     <script>
-        // API Key - Managed by the Canvas environment.
+        // API Key (Empty string is required for automatic injection in this environment)
         const apiKey = ""; 
 
-        function showMessage(msg, isError = false) {
-            const box = document.getElementById('messageBox');
-            box.innerText = msg;
-            box.style.backgroundColor = isError ? '#ef4444' : '#0f172a';
-            box.classList.remove('opacity-0', 'translate-y-4');
-            box.classList.add('opacity-100', 'translate-y-0');
+        function showToast(msg, isError = false) {
+            const toast = document.getElementById('toast');
+            toast.innerText = msg;
+            toast.style.backgroundColor = isError ? '#ef4444' : '#0f172a';
+            toast.classList.remove('opacity-0', 'translate-y-4', 'pointer-events-none');
+            toast.classList.add('opacity-100', 'translate-y-0');
             setTimeout(() => {
-                box.classList.add('opacity-0', 'translate-y-4');
-                box.classList.remove('opacity-100', 'translate-y-0');
+                toast.classList.add('opacity-0', 'translate-y-4', 'pointer-events-none');
+                toast.classList.remove('opacity-100', 'translate-y-0');
             }, 3000);
         }
 
@@ -152,118 +180,115 @@
             if (!text) return;
             
             try {
-                const buffer = document.getElementById('copyBuffer');
-                buffer.value = text;
-                buffer.select();
+                const area = document.getElementById('hiddenCopyArea');
+                area.value = text;
+                area.select();
                 document.execCommand('copy');
-                showMessage('내용이 복사되었습니다! ✨');
+                showToast('클립보드에 복사되었습니다! ✨');
             } catch (err) {
-                console.error('Copy failed:', err);
-                showMessage('복사에 실패했습니다.', true);
+                showToast('복사에 실패했습니다.', true);
             }
         }
 
         async function generateContent() {
-            // Environment Check
-            if (apiKey === undefined) {
-                showMessage("API 환경 설정에 문제가 있습니다.", true);
-                return;
-            }
-
             const region = document.getElementById('region').value.trim();
             const school = document.getElementById('school').value.trim();
             const audience = document.getElementById('audience').value.trim();
             const notes = document.getElementById('notes').value.trim();
 
             if (!region || !school || !audience) {
-                showMessage('모든 강의 정보를 입력해주세요! ✍️');
+                showToast('필수 정보를 모두 입력해주세요! ✍️');
                 return;
             }
 
             const btn = document.getElementById('generateBtn');
             const btnText = document.getElementById('btnText');
-            btn.disabled = true;
-            btnText.innerHTML = '<div class="loader mr-2"></div> AI 포스팅 생성 중...';
+            const resultContainer = document.getElementById('resultContainer');
+            const loadingOverlay = document.getElementById('loadingOverlay');
 
-            const systemPrompt = `당신은 생성형 AI 및 에듀테크 전문가이자 미술교사인 사용자를 위한 홍보 마케팅 전문가입니다. 
-            제공된 정보를 바탕으로 매력적인 인스타그램 포스팅과 네이버 블로그 포스팅 초안을 작성하세요.
-            반드시 아래의 유효한 JSON 형식으로만 응답해야 합니다:
+            btn.disabled = true;
+            btnText.innerText = '작성 중...';
+            loadingOverlay.classList.remove('hidden');
+            resultContainer.classList.add('hidden');
+
+            const systemPrompt = `당신은 생성형 AI 및 에듀테크 전문가이자 미술교사인 김병찬 님을 위한 퍼스널 브랜딩 마케터입니다.
+            입력된 강의 정보를 바탕으로 전문적이면서도 친근한 인스타그램과 블로그 포스팅 초안을 작성하세요.
+            반드시 다음 JSON 구조로 응답하세요:
             {
-                "instagram": "이모지가 포함된 감성적인 인스타그램 문구 (해시태그 5개 포함)",
-                "blog": "제목: [매력적인 제목]\\n\\n본문 내용 (상세하고 전문적인 서술, 해시태그 8개 포함)"
+                "instagram": "이모지가 포함된 트렌디한 인스타그램 문구 (해시태그 포함)",
+                "blog": "제목: [눈길을 끄는 제목]\\n\\n본문 내용 (상세한 강의 후기 형태, 해시태그 포함)"
             }`;
 
-            const userQuery = `지역: ${region}, 기관명: ${school}, 대상: ${audience}, 특이사항 및 분위기: ${notes}`;
+            const userPrompt = `출강 지역: ${region}\n기관: ${school}\n대상: ${audience}\n분위기/특징: ${notes}`;
 
             try {
                 const response = await fetchWithRetry(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        contents: [{ parts: [{ text: userQuery }] }],
-                        systemInstruction: { parts: [{ text: systemPrompt }] },
-                        generationConfig: { 
-                            responseMimeType: "application/json",
-                            temperature: 0.8
-                        }
+                        contents: [{ parts: [{ text: userPrompt }] }],
+                        systemInstruction: { parts: [{ text: systemPrompt }] }
                     })
                 });
 
                 const data = await response.json();
                 
                 if (data.error) {
-                    throw new Error(data.error.message || "API 호출 중 오류가 발생했습니다.");
+                    throw new Error(data.error.message || "API 인증 또는 호출 오류가 발생했습니다.");
                 }
 
-                if (!data.candidates?.[0]?.content?.parts?.[0]?.text) {
-                    throw new Error("AI로부터 응답을 받지 못했습니다.");
+                const rawContent = data.candidates?.[0]?.content?.parts?.[0]?.text;
+                if (!rawContent) {
+                    throw new Error("AI로부터 유효한 응답을 받지 못했습니다.");
                 }
 
-                const rawText = data.candidates[0].content.parts[0].text;
-                let result;
-                
+                // Extract JSON from response (handling potential markdown formatting)
+                let parsedResult;
                 try {
-                    // JSON만 추출하기 위한 정규식 처리
-                    const jsonMatch = rawText.match(/\{[\s\S]*\}/);
-                    result = JSON.parse(jsonMatch ? jsonMatch[0] : rawText);
-                } catch (e) {
-                    console.error("JSON Parsing failed. Raw text:", rawText);
-                    throw new Error("응답 형식 처리 중 오류가 발생했습니다.");
+                    const jsonMatch = rawContent.match(/\{[\s\S]*\}/);
+                    parsedResult = JSON.parse(jsonMatch ? jsonMatch[0] : rawContent);
+                } catch (parseError) {
+                    console.error("Parse Error:", rawContent);
+                    throw new Error("응답 데이터 형식이 올바르지 않습니다.");
                 }
 
-                document.getElementById('instaContent').innerText = result.instagram || "내용 생성 실패";
-                document.getElementById('blogContent').innerText = result.blog || "내용 생성 실패";
+                document.getElementById('instaContent').innerText = parsedResult.instagram || "생성 실패";
+                document.getElementById('blogContent').innerText = parsedResult.blog || "생성 실패";
                 
-                const resultContainer = document.getElementById('resultContainer');
+                loadingOverlay.classList.add('hidden');
                 resultContainer.classList.remove('hidden');
                 
                 setTimeout(() => {
                     resultContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }, 200);
+                }, 100);
 
-                showMessage('포스팅이 성공적으로 생성되었습니다! 🎉');
+                showToast('포스팅이 준비되었습니다! 🚀');
 
             } catch (error) {
-                console.error("Generation Error:", error);
-                showMessage(error.message || "오류가 발생했습니다. 다시 시도해주세요.", true);
+                console.error("Generate Error:", error);
+                showToast(error.message, true);
+                loadingOverlay.classList.add('hidden');
             } finally {
                 btn.disabled = false;
-                btnText.innerText = '다시 생성하기';
+                btnText.innerText = 'AI 포스팅 생성하기';
             }
         }
 
-        async function fetchWithRetry(url, options, retries = 5, backoff = 1000) {
-            for (let i = 0; i < retries; i++) {
+        async function fetchWithRetry(url, options, maxRetries = 5) {
+            let delay = 1000;
+            for (let i = 0; i < maxRetries; i++) {
                 try {
                     const res = await fetch(url, options);
-                    // 인증 오류(401, 403)는 재시도하지 않음
+                    if (res.ok) return res;
+                    
+                    // Do not retry on auth errors
                     if (res.status === 401 || res.status === 403) return res;
-                    if (!res.ok) throw new Error(`HTTP Error ${res.status}`);
-                    return res;
+                    
+                    throw new Error(`HTTP ${res.status}`);
                 } catch (err) {
-                    if (i === retries - 1) throw err;
-                    // 지수 백오프 적용
-                    await new Promise(r => setTimeout(r, backoff * Math.pow(2, i)));
+                    if (i === maxRetries - 1) throw err;
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                    delay *= 2; // Exponential backoff
                 }
             }
         }
