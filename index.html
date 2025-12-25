@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>강의 리뷰 SNS 포스팅 생성기</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;700&display=swap');
+        body { font-family: 'Pretendard', sans-serif; background-color: #f8fafc; }
+        .glass { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); }
+        .loader {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #3498db;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 8px;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+    <div class="max-w-4xl mx-auto">
+        <!-- Header & Branding -->
+        <header class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-slate-800 mb-2">✨ 강의 리뷰 SNS 포스팅 생성기</h1>
+            <p class="text-blue-600 font-semibold text-lg">개발자: 가치있는 미래교육 연구소 대표 김병찬</p>
+        </header>
+
+        <!-- Input Section -->
+        <div class="bg-white rounded-2xl shadow-xl p-6 mb-8 border border-slate-200">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-1">출강 지역</label>
+                    <input type="text" id="region" placeholder="예: 서울 강남구, 제주도 등" class="w-full px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-1">학교/기관명</label>
+                    <input type="text" id="school" placeholder="예: 한국중학교, 교육청 등" class="w-full px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-1">교육 대상</label>
+                    <input type="text" id="audience" placeholder="예: 중학생, 교사, 학부모 등" class="w-full px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-1">강의 주제/특이사항</label>
+                    <input type="text" id="notes" placeholder="예: 생성형 AI로 명화 그리기, 열정 가득했음" class="w-full px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                </div>
+            </div>
+            <button id="generateBtn" onclick="generateContent()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition-all shadow-lg flex justify-center items-center">
+                <span id="btnText">포스팅 생성하기</span>
+            </button>
+        </div>
+
+        <!-- Result Section -->
+        <div id="resultContainer" class="hidden space-y-8">
+            <div class="flex justify-between items-center px-2">
+                <h2 class="text-xl font-bold text-slate-800">생성된 결과물</h2>
+                <button onclick="generateContent()" class="text-blue-600 font-semibold hover:underline flex items-center gap-1">
+                    <i class="fa-solid fa-rotate"></i> 다시 생성하기
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Instagram Card -->
+                <div class="bg-white rounded-2xl shadow-lg border border-pink-100 overflow-hidden">
+                    <div class="bg-gradient-to-r from-purple-500 to-pink-500 p-4 text-white flex justify-between items-center">
+                        <span class="font-bold"><i class="fa-brands fa-instagram mr-2"></i>인스타그램</span>
+                        <button onclick="copyText('instaContent')" class="bg-white/20 hover:bg-white/30 px-3 py-1 rounded-lg text-xs transition-all">복사하기</button>
+                    </div>
+                    <div class="p-5">
+                        <div id="instaContent" class="text-slate-700 whitespace-pre-wrap leading-relaxed min-h-[200px]"></div>
+                    </div>
+                </div>
+
+                <!-- Blog Card -->
+                <div class="bg-white rounded-2xl shadow-lg border border-green-100 overflow-hidden">
+                    <div class="bg-gradient-to-r from-green-500 to-emerald-600 p-4 text-white flex justify-between items-center">
+                        <span class="font-bold"><i class="fa-solid fa-blog mr-2"></i>네이버 블로그</span>
+                        <button onclick="copyText('blogContent')" class="bg-white/20 hover:bg-white/30 px-3 py-1 rounded-lg text-xs transition-all">복사하기</button>
+                    </div>
+                    <div class="p-5">
+                        <div id="blogContent" class="text-slate-700 whitespace-pre-wrap leading-relaxed min-h-[200px]"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Hidden input for clipboard copy fallback -->
+        <textarea id="copyBuffer" class="fixed -top-full opacity-0"></textarea>
+
+        <!-- Message Box -->
+        <div id="messageBox" class="fixed bottom-8 left-1/2 -translate-x-1/2 px-6 py-3 rounded-full bg-slate-800 text-white shadow-2xl transition-all opacity-0 pointer-events-none">
+        </div>
+    </div>
+
+    <script>
+        const apiKey = ""; // Runtime automatically provides this
+
+        function showMessage(msg) {
+            const box = document.getElementById('messageBox');
+            box.innerText = msg;
+            box.classList.remove('opacity-0');
+            setTimeout(() => box.classList.add('opacity-0'), 2000);
+        }
+
+        function copyText(elementId) {
+            const text = document.getElementById(elementId).innerText;
+            const buffer = document.getElementById('copyBuffer');
+            buffer.value = text;
+            buffer.select();
+            document.execCommand('copy');
+            showMessage('클립보드에 복사되었습니다! ✨');
+        }
+
+        async function generateContent() {
+            const region = document.getElementById('region').value;
+            const school = document.getElementById('school').value;
+            const audience = document.getElementById('audience').value;
+            const notes = document.getElementById('notes').value;
+
+            if (!region || !school || !audience) {
+                showMessage('모든 기초 정보를 입력해주세요!');
+                return;
+            }
+
+            const btn = document.getElementById('generateBtn');
+            const btnText = document.getElementById('btnText');
+            btn.disabled = true;
+            btnText.innerHTML = '<div class="loader"></div> 생성 중...';
+
+            const systemPrompt = `당신은 생성형 AI, 에듀테크, 리더십 전문 강사이자 미술교사인 사용자를 위한 전문 SNS 마케터입니다. 
+            사용자가 제공한 강의 정보를 바탕으로 인스타그램과 네이버 블로그용 포스팅을 작성하세요.
+            사용자 페르소나: 세련되고 트렌디하며 열정적인 교육 전문가.
+
+            형식: JSON
+            {
+                "instagram": "본문 내용... (해시태그 딱 5개 포함)",
+                "blog": "제목: [제목]\\n\\n본문 내용... (풍부한 내용, SEO에 유리한 해시태그 5~10개 포함)"
+            }
+
+            문체: 독자의 흥미를 끄는 말투, 전문성이 느껴지면서도 친근하고 재미있는 톤앤매너를 유지하세요.`;
+
+            const userQuery = `출강 정보:
+            - 지역: ${region}
+            - 학교/기관: ${school}
+            - 교육 대상: ${audience}
+            - 특이사항 및 주제: ${notes}
+
+            위 정보를 바탕으로 인스타그램과 블로그 글을 만들어줘.`;
+
+            try {
+                const response = await fetchWithRetry(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: userQuery }] }],
+                        systemInstruction: { parts: [{ text: systemPrompt }] },
+                        generationConfig: { responseMimeType: "application/json" }
+                    })
+                });
+
+                const data = await response.json();
+                const result = JSON.parse(data.candidates[0].content.parts[0].text);
+
+                document.getElementById('instaContent').innerText = result.instagram;
+                document.getElementById('blogContent').innerText = result.blog;
+                document.getElementById('resultContainer').classList.remove('hidden');
+                
+                // Scroll to result
+                document.getElementById('resultContainer').scrollIntoView({ behavior: 'smooth' });
+
+            } catch (error) {
+                console.error(error);
+                showMessage('생성 중 오류가 발생했습니다. 다시 시도해주세요.');
+            } finally {
+                btn.disabled = false;
+                btnText.innerText = '다시 생성하기';
+            }
+        }
+
+        async function fetchWithRetry(url, options, retries = 5, backoff = 1000) {
+            try {
+                const res = await fetch(url, options);
+                if (!res.ok) throw new Error();
+                return res;
+            } catch (err) {
+                if (retries <= 0) throw err;
+                await new Promise(resolve => setTimeout(resolve, backoff));
+                return fetchWithRetry(url, options, retries - 1, backoff * 2);
+            }
+        }
+    </script>
+</body>
+</html>
