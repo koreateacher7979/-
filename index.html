@@ -156,7 +156,7 @@
             }
 
             const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
-            const systemPrompt = `당신은 '가치있는 미래교육연구소' 대표 김병찬 님의 퍼스널 브랜딩을 돕는 전문 소셜 미디어 마케터입니다. 김병찬 님은 미술교사 출신이자 고등학교 미술 강사, 에듀테크/생성형 AI/리더십 전문 강사입니다. 전문성과 열정이 느껴지면서도 친근한 톤앤매너를 유지하세요.`;
+            const systemPrompt = `당신은 '가치있는 미래교육연구소' 대표 김병찬 님의 퍼스널 브랜딩을 돕는 전문 소셜 미디어 마케터입니다. 김병찬 님은 미술교사 출신이자 고등학교 미술 강사, 에듀테크/생성형 AI/리더십 전문 강사입니다. 전문성과 열정이 느껴지면서도 따뜻하고 다정한 톤앤매너를 유지하세요.`;
 
             const payload = {
                 contents: [{ parts: [{ text: prompt }] }],
@@ -199,9 +199,9 @@
 
             let prompt = "";
             if (type === 'instagram') {
-                prompt = `다음 정보를 바탕으로 인스타그램 출강 후기 포스팅을 작성해줘. 날짜:${formData.date}, 지역:${formData.region}, 장소:${formData.location}, 대상:${formData.target}, 주제:${formData.subject}, 특이사항:${formData.notes}. [조건] 1. 첫 문장에 강력한 훅(Hook) 사용. 2. 이모지를 활용해 시각화. 3. 미술교사 출신의 감각이 느껴지는 세련된 말투. 4. 해시태그는 반드시 5개만 생성할 것.`;
+                prompt = `다음 정보를 바탕으로 인스타그램 출강 후기 포스팅을 작성해줘. 날짜:${formData.date}, 지역:${formData.region}, 장소:${formData.location}, 대상:${formData.target}, 주제:${formData.subject}, 특이사항:${formData.notes}. [조건] 1. 첫 문장에 강력한 훅(Hook) 사용. 2. 이모지를 활용해 시각화. 3. 미술교사 출신의 감각이 느껴지는 세련되고 다정한 말투 사용. 4. 해시태그는 마지막에 반드시 5개만 생성할 것. 5. 해시태그를 제외한 본문 내에서는 '#' 기호를 절대 사용하지 말 것.`;
             } else {
-                prompt = `다음 정보를 바탕으로 네이버 블로그 출강 후기 포스팅을 작성해줘. 날짜:${formData.date}, 지역:${formData.region}, 장소:${formData.location}, 대상:${formData.target}, 주제:${formData.subject}, 특이사항:${formData.notes}. [조건] 1. SEO 최적화 제목(지역+주제+출강후기 키워드 포함). 2. 도입-본문(핵심내용)-결론 구조. 3. 사진 삽입 위치 가이드 포함. 4. 에듀테크 전문가로서의 인사이트 강조. 5. 추천 태그 10개 이상.`;
+                prompt = `다음 정보를 바탕으로 네이버 블로그 출강 후기 포스팅을 작성해줘. 날짜:${formData.date}, 지역:${formData.region}, 장소:${formData.location}, 대상:${formData.target}, 주제:${formData.subject}, 특이사항:${formData.notes}. [조건] 1. SEO 최적화 제목(지역+주제+출강후기 키워드 포함). 2. '도입, 본문, 결론'과 같은 딱딱한 소제목 구분은 절대 제외하고, 친구에게 이야기하듯 친근하고 자연스러운 스토리텔링 형식으로 작성. 3. 사진 삽입 위치 가이드 포함. 4. 에듀테크 전문가로서의 인사이트를 쉽고 다정하게 전달. 5. 추천 태그 10개 이상. 6. 본문 내에서 '#' 기호를 절대 사용하지 말 것(태그 제외).`;
             }
 
             try {
